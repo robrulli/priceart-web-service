@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xantrix.webapp.appconf.AppConfig;
-import com.xantrix.webapp.entities.Prezzi;
+import com.xantrix.webapp.entities.DettListini;
 import com.xantrix.webapp.service.PrezziService;
 
 @RestController
@@ -30,7 +30,7 @@ public class PrezziController
 		
 		logger.info("Listino di Riferimento: " + IdList);
 		
-		Prezzi prezzo =  prezziService.SelPrezzo(CodArt, IdList);
+		DettListini prezzo =  prezziService.SelPrezzo(CodArt, IdList);
 		
 		if (prezzo != null)
 		{

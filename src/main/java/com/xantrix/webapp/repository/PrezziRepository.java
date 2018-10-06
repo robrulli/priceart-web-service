@@ -2,9 +2,9 @@ package com.xantrix.webapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.xantrix.webapp.entities.Prezzi;
+import com.xantrix.webapp.entities.DettListini;
 
-public interface PrezziRepository extends JpaRepository<Prezzi, Long>
+public interface PrezziRepository extends JpaRepository<DettListini, Long>
 {
-	public Prezzi findByCodArtAndIdList(String CodArt, String IdList); 
+	public DettListini findByCodArtAndIdList(String CodArt, String IdList); 
 }

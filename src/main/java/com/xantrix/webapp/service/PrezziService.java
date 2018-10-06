@@ -1,8 +1,8 @@
 package com.xantrix.webapp.service;
 
-import com.xantrix.webapp.entities.Prezzi;
+import com.xantrix.webapp.entities.DettListini;
 
 public interface PrezziService
 {
-	public Prezzi SelPrezzo(String CodArt, String Listino);
+	public DettListini SelPrezzo(String CodArt, String Listino);
 }

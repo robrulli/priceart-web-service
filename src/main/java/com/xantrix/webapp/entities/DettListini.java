@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dettlistini")
-public class Prezzi implements Serializable
+public class DettListini implements Serializable
 {
 	private static final long serialVersionUID = 8777751177774522519L;
 	
@@ -26,7 +26,7 @@ public class Prezzi implements Serializable
 	@Column(name = "PREZZO")
 	private Double prezzo;
 	
-	public Prezzi() {}
+	public DettListini() {}
 
 	public Integer getId()
 	{
