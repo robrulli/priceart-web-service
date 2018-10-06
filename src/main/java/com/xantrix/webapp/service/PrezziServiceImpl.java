@@ -18,8 +18,6 @@ public class PrezziServiceImpl implements PrezziService
 	@Override
 	public DettListini SelPrezzo(String CodArt, String Listino)
 	{
-		return prezziRepository.findByCodArtAndIdList(CodArt, Listino); 
+		return prezziRepository.findByCodArtAndIdList(CodArt, Listino);
 	}
-	
-	
 }

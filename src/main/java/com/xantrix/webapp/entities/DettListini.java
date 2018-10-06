@@ -5,10 +5,17 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "dettlistini")
+@Data
 public class DettListini implements Serializable
 {
 	private static final long serialVersionUID = 8777751177774522519L;
@@ -25,49 +32,10 @@ public class DettListini implements Serializable
 	
 	@Column(name = "PREZZO")
 	private Double prezzo;
-	
-	public DettListini() {}
 
-	public Integer getId()
-	{
-		return id;
-	}
-
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
-
-	public String getCodArt()
-	{
-		return codArt;
-	}
-
-	public void setCodArt(String codArt)
-	{
-		this.codArt = codArt;
-	}
-
-	public String getIdList()
-	{
-		return idList;
-	}
-
-	public void setIdList(String idList)
-	{
-		this.idList = idList;
-	}
-
-	public Double getPrezzo()
-	{
-		return prezzo;
-	}
-
-	public void setPrezzo(Double prezzo)
-	{
-		this.prezzo = prezzo;
-	}
-	
-	
+	@ManyToOne
+	@JoinColumn(name = "Id", referencedColumnName = "Id")
+	@JsonBackReference
+	private Listini listino;
 
 }
