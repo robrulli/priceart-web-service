@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xantrix.webapp.appconf.AppConfig;
 import com.xantrix.webapp.entities.DettListini;
 import com.xantrix.webapp.exception.BindingException;
+import com.xantrix.webapp.exception.NotFoundException;
 import com.xantrix.webapp.service.PrezziService;
 
 @RestController
@@ -41,17 +42,10 @@ public class PrezziController
 	@Autowired
 	private ResourceBundleMessageSource errMessage;
 
-	@RequestMapping(value = "/cerca/codice/{codart}", method = RequestMethod.GET)
-	public ResponseEntity<?> getPriceCodArt(@PathVariable("codart") String CodArt)  
+	@RequestMapping(value = "/{codart}", method = RequestMethod.GET)
+	public double getPriceCodArt(@PathVariable("codart") String CodArt)  
 	{
 		double retVal = 0;
-
-		HttpHeaders headers = new HttpHeaders();
-		ObjectMapper mapper = new ObjectMapper();
-
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		ObjectNode responseNode = mapper.createObjectNode();
-
 
 		String IdList = Config.getListino();
 		
@@ -70,11 +64,39 @@ public class PrezziController
 			logger.warn("Prezzo Articolo Assente!!");
 		}
 
-		responseNode.put("prezzo", retVal);
+		return retVal;
+	}
 
-		return new ResponseEntity<>(responseNode, headers, HttpStatus.OK);
+	@RequestMapping(value = "/cerca/codice/{codart}", method = RequestMethod.GET)
+	public ResponseEntity<DettListini> getListCodArt(@PathVariable("codart") String CodArt)  
+		throws NotFoundException
+	{
+		HttpHeaders headers = new HttpHeaders();
+		ObjectMapper mapper = new ObjectMapper();
+
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		ObjectNode responseNode = mapper.createObjectNode();
+
+		//Otteniamo il listino dal file di configurazione
+		String IdList = Config.getListino();
+		
+		logger.info("Listino di Riferimento: " + IdList);
+		
+		DettListini dettListini =  prezziService.SelPrezzo(CodArt, IdList);
+		
+		if (dettListini == null)
+		{
+			String ErrMsg = String.format("Il prezzo del listino %s del codice %s non è stato trovato!", IdList, CodArt);
+			
+			logger.warn(ErrMsg);
+			
+			throw new NotFoundException(ErrMsg);
+		}
+		
+		return new ResponseEntity<DettListini>(dettListini, HttpStatus.OK);
 			
 	}
+
 	// ------------------- INSERT PREZZO LISTINO ------------------------------------
 	@RequestMapping(value = "/inserisci", method = RequestMethod.POST)
 	public ResponseEntity<DettListini> createPrice(@Valid @RequestBody DettListini dettListini, BindingResult bindingResult,

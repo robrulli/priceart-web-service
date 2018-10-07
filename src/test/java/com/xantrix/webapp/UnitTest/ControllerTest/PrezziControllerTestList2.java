@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.xantrix.webapp.Application;
-import com.xantrix.webapp.appconf.AppConfig;
+ 
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -19,17 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+@TestPropertySource(locations="classpath:application-list2.properties")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class PrezziControllerTest
+public class PrezziControllerTestList2
 {
     private MockMvc mockMvc;
 
@@ -43,20 +45,31 @@ public class PrezziControllerTest
 
     }
     
-    String JsonData =  "{\r\n" + 
-    		"	\"codArt\":\"002000301\",\r\n" + 
-    		"	\"idList\":\"3\",\r\n" + 
-    		"	\"prezzo\":1.99\r\n" + 
-    		"}";
-			
 	@Test
-	public void A_GetPrzCodArtTest() throws Exception
+	public void A_getList2CodArtTest() throws Exception
 	{
 		mockMvc.perform(MockMvcRequestBuilders.get("/prezzi/cerca/codice/002000301")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$.prezzo").value("1.07")) 
+			.andExpect(jsonPath("$.id").exists())
+			.andExpect(jsonPath("$.codArt").exists())
+			.andExpect(jsonPath("$.codArt").value("002000301"))
+			.andExpect(jsonPath("$.idList").exists())
+			.andExpect(jsonPath("$.idList").value("2"))
+			.andExpect(jsonPath("$.prezzo").exists())
+			.andExpect(jsonPath("$.prezzo").value("0.87"))
+			.andReturn();
+	}
+					
+	@Test
+	public void A_GetPrzCodArtTestList2() throws Exception
+	{
+		mockMvc.perform(MockMvcRequestBuilders.get("/prezzi/002000301")
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$").value("0.87")) 
 			.andReturn();
 	}
 
@@ -64,13 +77,19 @@ public class PrezziControllerTest
 	@Test
 	public void B_ErrGetPrzCodArtTest() throws Exception
 	{
-		mockMvc.perform(MockMvcRequestBuilders.get("/prezzi/cerca/codice/002000301")
+		mockMvc.perform(MockMvcRequestBuilders.get("/prezzi/0020003012")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$.prezzo").value("0.0")) 
+			.andExpect(jsonPath("$").value("0.0")) 
 			.andReturn();
 	}
+
+	String JsonData =  "{\r\n" + 
+    		"	\"codArt\":\"002000301\",\r\n" + 
+    		"	\"idList\":\"3\",\r\n" + 
+    		"	\"prezzo\":1.99\r\n" + 
+    		"}";
 
 	@Test
 	public void A_testInsPrezzo() throws Exception
