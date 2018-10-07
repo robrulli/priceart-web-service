@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "priceart-web-service",
+                "projectName": "priceart-web-service",
+                "workingDirectory": "c:\\Users\\Nicola\\OneDrive\\Documenti\\Corsi Udemy\\Spring Cloud\\priceart-web-service",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "priceart-web-service",
+                "projectName": "priceart-web-service",
+                "workingDirectory": "c:\\Users\\Nicola\\OneDrive\\Documenti\\Corsi Udemy\\Spring Cloud\\priceart-web-service",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

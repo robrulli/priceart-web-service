@@ -20,4 +20,16 @@ public class PrezziServiceImpl implements PrezziService
 	{
 		return prezziRepository.findByCodArtAndIdList(CodArt, Listino);
 	}
+
+	@Override
+	public void InsPrezzo(DettListini dettListini) 
+	{
+		prezziRepository.save(dettListini);
+	}
+
+	@Override
+	public void DelPrezzo(String CodArt, String IdList) 
+	{
+		prezziRepository.DelRowDettList(CodArt, IdList);
+	}
 }
