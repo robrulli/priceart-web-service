@@ -2,9 +2,6 @@
 package com.xantrix.webapp.UnitTest.RepositoryTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
 
 import com.xantrix.webapp.Application;
 import com.xantrix.webapp.entities.DettListini;
@@ -15,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

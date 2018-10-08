@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
+
 import javax.validation.Valid;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,8 +47,16 @@ public class PrezziController
 	@Autowired
 	private ResourceBundleMessageSource errMessage;
 
+	@ApiOperation(
+		      value = "Ricerca il prezzo di un articolo in base al listino inserito nelle proprietà", 
+		      notes = "Metodo richiamato da servizio esterno. Restituisce 0 in caso di prezzo non trovato",
+		      response = double.class, 
+		      produces = "application/json")
+	@ApiResponses(value =
+	{ @ApiResponse(code = 200, message = "Chiamata Ok")})
 	@RequestMapping(value = "/{codart}", method = RequestMethod.GET)
-	public double getPriceCodArt(@PathVariable("codart") String CodArt)  
+	// ------------------- SELECT PREZZO CODART ------------------------------------
+	public double getPriceCodArt(@ApiParam("Codice Articolo") @PathVariable("codart") String CodArt)  
 	{
 		double retVal = 0;
 
@@ -67,16 +80,16 @@ public class PrezziController
 		return retVal;
 	}
 
+
+	// ------------------- SELECT DETTAGLIO LISTINO ------------------------------------
 	@RequestMapping(value = "/cerca/codice/{codart}", method = RequestMethod.GET)
 	public ResponseEntity<DettListini> getListCodArt(@PathVariable("codart") String CodArt)  
 		throws NotFoundException
 	{
 		HttpHeaders headers = new HttpHeaders();
-		ObjectMapper mapper = new ObjectMapper();
-
+	
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		ObjectNode responseNode = mapper.createObjectNode();
-
+		
 		//Otteniamo il listino dal file di configurazione
 		String IdList = Config.getListino();
 		
