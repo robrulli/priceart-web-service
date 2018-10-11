@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.xantrix.webapp.Application;
 import com.xantrix.webapp.entities.DettListini;
-//import com.xantrix.webapp.entities.Articoli;
 import com.xantrix.webapp.repository.PrezziRepository;
 
 import org.junit.Test;
