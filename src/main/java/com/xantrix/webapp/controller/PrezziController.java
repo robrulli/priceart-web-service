@@ -56,21 +56,24 @@ public class PrezziController
 	{ @ApiResponse(code = 200, message = "Chiamata Ok")})
 	@RequestMapping(value = "/{codart}", method = RequestMethod.GET)
 	// ------------------- SELECT PREZZO CODART ------------------------------------
-	public double getPriceCodArt(@ApiParam("Codice Articolo") @PathVariable("codart") String CodArt)  
+	public double getPriceCodArt(@ApiParam("Codice Articolo") @PathVariable("codart") String CodArt)  //il metodo ci restituisce il prezzo dellarticolo 
+	                              //con codice e in base al listino grazie all'app properti
 	{
 		double retVal = 0;
 
-		String IdList = Config.getListino();
+		String IdList = Config.getListino();//otteniamo listino attivo/dalla classe config
 		
 		logger.info("Listino di Riferimento: " + IdList);
 		
 		DettListini prezzo =  prezziService.SelPrezzo(CodArt, IdList);
 		
-		if (prezzo != null)
+		if (prezzo != null)//verifica dettListino
 		{
 			logger.info("Prezzo Articolo: " + prezzo.getPrezzo());
 		
-			retVal = prezzo.getPrezzo();
+			retVal = prezzo.getPrezzo();//richgiediamo un prezzo al clientse non ce darà quel messaggio o ritorna un prezzo
+			
+			
 		}
 		else
 		{

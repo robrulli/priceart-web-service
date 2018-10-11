@@ -43,7 +43,7 @@ public class PrezziControllerTestList1
 
     }
     
-	@Test
+	@Test //valore del prezzo che è stato inseirto
 	public void A_getList1CodArtTest() throws Exception
 	{
 		mockMvc.perform(MockMvcRequestBuilders.get("/prezzi/cerca/codice/002000301")
